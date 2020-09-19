@@ -1,0 +1,38 @@
+{
+  "name": "one-time-pad",
+  "version": "1.0.0",
+  "description": "One time pad in NodeJS supporting Strings, Buffers and Files",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "node tests/test.js",
+    "example": "npm install --prefix ./example && node example/example.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BenEdridge/one-time-pad.git"
+  },
+  "keywords": [
+    "one",
+    "time",
+    "pad",
+    "one-time",
+    "OTP",
+    "cipher",
+    "crypto",
+    "cryptography"
+  ],
+  "files": [
+    "README.md",
+    "index.js"
+  ],
+  "author": "Ben Edridge",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BenEdridge/one-time-pad/issues"
+  },
+  "homepage": "https://github.com/BenEdridge/one-time-pad#readme",
+  "dependencies": {}
+}

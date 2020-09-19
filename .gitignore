@@ -56,3 +56,9 @@ node_modules/
 
 # FuseBox cache
 .fusebox/
+
+# Test files
+tests/scratch/*
+
+# Node Lib
+package-lock.json
