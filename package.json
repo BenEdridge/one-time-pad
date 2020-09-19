@@ -1,9 +1,10 @@
 {
-  "name": "one-time-pad",
+  "name": "@bpe/one-time-pad",
   "version": "1.0.0",
   "description": "One time pad in NodeJS supporting Strings, Buffers and Files",
   "main": "index.js",
   "directories": {
+    "example": "example",
     "test": "tests"
   },
   "scripts": {
