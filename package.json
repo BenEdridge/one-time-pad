@@ -30,7 +30,7 @@
     "index.js"
   ],
   "author": "Ben Edridge",
-  "license": "MIT",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/BenEdridge/one-time-pad/issues"
   },
