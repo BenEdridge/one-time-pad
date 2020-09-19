@@ -27,7 +27,8 @@
   ],
   "files": [
     "README.md",
-    "index.js"
+    "index.js",
+    "LICENSE"
   ],
   "author": "Ben Edridge",
   "license": "ISC",
