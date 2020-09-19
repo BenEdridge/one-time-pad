@@ -1,9 +1,13 @@
 # One-Time Pad
 
-A simple One-Time Pad implementation in NodeJS
+A simple and more complete One-Time Pad implementation in NodeJS
 
 - No limitations on length of data or type of data encrypted
 - Supports Strings, Buffers, Files
+
+```
+npm install @bpe/one-time-pad
+```
 
 ```javascript
 const { OneTimePad } = require('one-time-pad');
