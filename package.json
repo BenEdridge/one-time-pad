@@ -1,6 +1,6 @@
 {
   "name": "@bpe/one-time-pad",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A more complete One-time pad implementation supporting Strings, Buffers and Files",
   "main": "index.js",
   "directories": {
