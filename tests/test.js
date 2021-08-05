@@ -3,8 +3,6 @@ const assert = require('assert');
 
 const fs = require('fs');
 
-const otp = OneTimePad.init();
-
 (function run() {
   generatedTestsSmallSize();
   randomTests1();
@@ -29,9 +27,9 @@ function generatedTestsSmallSize() {
       plainTextBuffer[j] = randomByte;
     }
 
-    const pad = otp.generatePad(plainTextBuffer);
-    const encryptedData = otp.encrypt(pad, plainTextBuffer);
-    const decryptedData = otp.decrypt(pad, encryptedData);
+    const pad = OneTimePad.generatePad(plainTextBuffer);
+    const encryptedData = OneTimePad.encrypt(pad, plainTextBuffer);
+    const decryptedData = OneTimePad.decrypt(pad, encryptedData);
 
     assert.deepStrictEqual(
       plainTextBuffer, decryptedData,
@@ -54,9 +52,9 @@ function randomTests1() {
       plainTextBuffer[j] = randomByte;
     }
 
-    const pad = otp.generatePad(plainTextBuffer);
-    const encryptedData = otp.encrypt(pad, plainTextBuffer);
-    const decryptedData = otp.decrypt(pad, encryptedData);
+    const pad = OneTimePad.generatePad(plainTextBuffer);
+    const encryptedData = OneTimePad.encrypt(pad, plainTextBuffer);
+    const decryptedData = OneTimePad.decrypt(pad, encryptedData);
 
     assert.deepStrictEqual(
       plainTextBuffer, decryptedData,
@@ -69,9 +67,9 @@ function randomTests1() {
 function edgeCases() {
   let plainTextBuffer = Uint8Array.from([0, 255, 0, 255, 1, 0, 0, 255, 255, 1, 1, 1, 255, 255, 255]);
 
-  const pad = otp.generatePad(plainTextBuffer);
-  const encryptedData = otp.encrypt(pad, plainTextBuffer);
-  const decryptedData = otp.decrypt(pad, encryptedData);
+  const pad = OneTimePad.generatePad(plainTextBuffer);
+  const encryptedData = OneTimePad.encrypt(pad, plainTextBuffer);
+  const decryptedData = OneTimePad.decrypt(pad, encryptedData);
 
   assert.deepStrictEqual(
     plainTextBuffer, decryptedData,
@@ -82,9 +80,9 @@ function edgeCases() {
 function test2() {
   let plainTextBuffer = Uint8Array.from([0]);
 
-  const pad = otp.generatePad(plainTextBuffer);
-  const encryptedData = otp.encrypt(pad, plainTextBuffer);
-  const decryptedData = otp.decrypt(pad, encryptedData);
+  const pad = OneTimePad.generatePad(plainTextBuffer);
+  const encryptedData = OneTimePad.encrypt(pad, plainTextBuffer);
+  const decryptedData = OneTimePad.decrypt(pad, encryptedData);
 
   assert.deepStrictEqual(
     plainTextBuffer, decryptedData,
@@ -95,9 +93,9 @@ function test2() {
 function test3() {
   let plainTextBuffer = Uint8Array.from([255]);
 
-  const pad = otp.generatePad(plainTextBuffer);
-  const encryptedData = otp.encrypt(pad, plainTextBuffer);
-  const decryptedData = otp.decrypt(pad, encryptedData);
+  const pad = OneTimePad.generatePad(plainTextBuffer);
+  const encryptedData = OneTimePad.encrypt(pad, plainTextBuffer);
+  const decryptedData = OneTimePad.decrypt(pad, encryptedData);
 
   assert.deepStrictEqual(
     plainTextBuffer, decryptedData,
@@ -107,10 +105,10 @@ function test3() {
 
 function text_test() {
   const plainText = 'Hello World!';
-  const pad = otp.generatePad(Buffer.from(plainText, 'utf8'));
+  const pad = OneTimePad.generatePad(Buffer.from(plainText, 'utf8'));
 
-  const encryptedData = otp.encrypt(pad, Buffer.from(plainText, 'utf8'));
-  const decryptedData = otp.decrypt(pad, encryptedData)
+  const encryptedData = OneTimePad.encrypt(pad, Buffer.from(plainText, 'utf8'));
+  const decryptedData = OneTimePad.decrypt(pad, encryptedData)
 
   assert.deepStrictEqual(
     Uint8Array.from(Buffer.from(plainText, 'utf8')), decryptedData,
@@ -120,10 +118,10 @@ function text_test() {
 
 function textFileEncryption() {
   const plainTextBuffer = new Uint8Array(fs.readFileSync('./tests/file.txt'));
-  const pad = otp.generatePad(plainTextBuffer);
+  const pad = OneTimePad.generatePad(plainTextBuffer);
 
-  const encryptedData = otp.encrypt(pad, plainTextBuffer);
-  const decryptedData = otp.decrypt(pad, encryptedData)
+  const encryptedData = OneTimePad.encrypt(pad, plainTextBuffer);
+  const decryptedData = OneTimePad.decrypt(pad, encryptedData)
 
   assert.ok(plainTextBuffer.length > 0, 'Test file should have loaded!')
 
@@ -134,13 +132,13 @@ function textFileEncryption() {
 }
 
 function pngFileEncryption() {
-  const pngBuffer = new Uint8Array(fs.readFileSync('./tests/Felis_silvestris_silvestris_small_gradual_decrease_of_quality.png'));
-  const pad = otp.generatePad(pngBuffer);
+  const pngBuffer = new Uint8Array(fs.readFileSync('./tests/test_image.png'));
+  const pad = OneTimePad.generatePad(pngBuffer);
 
-  fs.writeFileSync('./tests/scratch/encrypted.png', otp.encrypt(pad, pngBuffer));
+  fs.writeFileSync('./tests/scratch/encrypted.png', OneTimePad.encrypt(pad, pngBuffer));
 
   const encryptedPng = new Uint8Array(fs.readFileSync('./tests/scratch/encrypted.png'));
-  const decryptedData = otp.decrypt(pad, encryptedPng);
+  const decryptedData = OneTimePad.decrypt(pad, encryptedPng);
 
   fs.unlinkSync('./tests/scratch/encrypted.png');
 

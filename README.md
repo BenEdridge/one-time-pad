@@ -10,7 +10,8 @@ A simple and more complete One-Time Pad implementation in NodeJS
 
 
 - No limitations on length of data or type of data encrypted
-- Supports Strings, Buffers, Files
+- Supports any data type as long as you convert it to a Buffer
+- No dependencies required
 
 ## Installation
 
@@ -20,34 +21,58 @@ npm install @bpe/one-time-pad
 
 ## Usage
 
+### Strings
 ```javascript
 const { OneTimePad } = require('one-time-pad');
-
-const otp = OneTimePad.init(); // default 'buffer' based implementation
 
 const plainText = 'Hello World!';
 const plainTextBuffer = Buffer.from(plainText, 'utf8')
 
-// Generates a Secure Pad matching the length of plainText (required for decryption and must keep secure!)
-const pad = otp.generatePad(plainTextBuffer);
+// Secure Pad the length of plainText (Keep Secure!)
+const pad = OneTimePad.generatePad(plainTextBuffer);
 
-console.log(`Encrypting: ${plainText} with One Time Pad: ${Buffer.from(pad).toString('base64')}`);
-const encryptedData = otp.encrypt(pad, plainTextBuffer);
+const encryptedData = OneTimePad.encrypt(pad, plainTextBuffer);
 console.log(`${Buffer.from(encryptedData).toString('base64')}`);
 
-console.log(`Decrypting: ${Buffer.from(encryptedData).toString('base64')} with One Time Pad: ${Buffer.from(pad).toString('base64')}`);
-const decryptedData = otp.decrypt(pad, encryptedData);
+const decryptedData = OneTimePad.decrypt(pad, encryptedData);
 console.log(`Decrypted Data: ${Buffer.from(decryptedData).toString('utf8')}`);
 ```
+### Binary Data
 
-See: `example/example.js`
+```javascript
+const { OneTimePad } = require('one-time-pad');
+const fs = require('fs');
 
-Test png file:
-https://en.wikipedia.org/wiki/JPEG#/media/File:Felis_silvestris_silvestris_small_gradual_decrease_of_quality.png
+const pngBuffer = new Uint8Array(fs.readFileSync('./tests/test_image.png'));
+const pad = OneTimePad.generatePad(pngBuffer);
+
+fs.writeFileSync('./tests/scratch/encrypted.png', OneTimePad.encrypt(pad, pngBuffer));
+
+const encryptedPng = new Uint8Array(fs.readFileSync('./tests/scratch/encrypted.png'));
+const decryptedData = OneTimePad.decrypt(pad, encryptedPng);
+```
+
+```javascript
+const { OneTimePad } = require('one-time-pad');
+const fs = require('fs');
+
+const plainTextBuffer = new Uint8Array(fs.readFileSync('./tests/file.txt'));
+const pad = OneTimePad.generatePad(plainTextBuffer);
+
+const encryptedData = OneTimePad.encrypt(pad, plainTextBuffer);
+const decryptedData = OneTimePad.decrypt(pad, encryptedData);
+```
+
+See more examples in [tests](https://github.com/BenEdridge/one-time-pad/blob/master/tests/test.js)
+
 
 ## License
 
 ISC
+
+## Acknowledgements
+
+`test_image.png` file retrieved from: [en.wikipedia.org](https://en.wikipedia.org/wiki/JPEG#/media/File:Felis_silvestris_silvestris_small_gradual_decrease_of_quality.png).
 
 [npm-image]: https://img.shields.io/npm/v/path-to-regexp.svg?style=flat
 [npm-url]: https://npmjs.org/package/path-to-regexp
